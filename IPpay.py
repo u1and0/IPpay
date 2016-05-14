@@ -1,5 +1,9 @@
 '''
-## IPpay ver1.1
+## IPpay ver1.2
+
+__UPDATE1.2__
+'050Call'は月間通話料が315円を下回った場合は、315円を請求
+050Callは2.5時間くらい話さないと315円から変動しない？
 
 __UPDATE1.1__
 携帯と固定電話を別々にグラフ化
@@ -20,14 +24,15 @@ planに料金表
 
 
 __TODO__
-'050Call'は月間通話料が315円を下回った場合は、315円を請求
+FUCK!通話料が海外用の金額と間違えてたぜ
+しかも携帯と固定で料金加算時間が異なる！
 '''
 
 
 
 
 
-timeSec=[i for i in range(3601)]
+timeSec=[i for i in range(7201)]
 plan={'050plus':[300,9,29,60],
 		'fusionIP':[0,8,8,30],
 		'LaLa Call':[100,6,28,60],
@@ -55,11 +60,15 @@ mode={'cell':1,'fix':2}
 for l in mode.keys():    #携帯電話と固定電話にかける場合
 	k=0
 	for sev in plan.keys():    #planディクショナリ内の業者名称をforeach
-		j,cell,fix=0,[],[]
+		j,pay=0,[]
 		for i in timeSec:    #秒数だけループ
-			cell.append(plan[sev][0]+plan[sev][mode[l]]*j)    #料金をリストに追加
+			pay.append(plan[sev][0]+plan[sev][mode[l]]*j)    #料金をリストに追加
 			if i%plan[sev][3]==0:j+=1    #料金計算。30秒加算か1分加算がある(リストの項目3で決められている)
-		plan[sev].append(cell)    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
+		if sev=='050Call':
+			for modify in range(len(pay)):
+				if pay[modify]<315:
+					pay[modify]=315
+		plan[sev].append(pay)    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
 		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][4],'-' if k<7 else '--',label=sev)
 		k+=1    #グラフカウンタ
 	plt.title(l)
