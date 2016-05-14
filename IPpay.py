@@ -1,5 +1,8 @@
 '''
-## IPpay ver1.0
+## IPpay ver1.1
+
+__UPDATE1.1__
+携帯と固定電話を別々にグラフ化
 
 __UPDATE1.0__
 First commit
@@ -17,14 +20,14 @@ planに料金表
 
 
 __TODO__
-携帯と固定電話を別々にグラフ化
+'050Call'は月間通話料が315円を下回った場合は、315円を請求
 '''
 
 
 
 
 
-timeSec=[i for i in range(360)]
+timeSec=[i for i in range(3601)]
 plan={'050plus':[300,9,29,60],
 		'fusionIP':[0,8,8,30],
 		'LaLa Call':[100,6,28,60],
@@ -36,32 +39,34 @@ plan={'050plus':[300,9,29,60],
 		'FleaLine Light':[400,8,30,60],
 		'BlueSIPフォン':[600,21,21,60]
 		}
+'''
+planのリストの中身
+0. 月額基本料金
+1. 通話料(携帯電話)
+2. 通話料(固定電話)
+3. 料金加算時間
+'''
 
 
 
 
-# pay=[ for i in ]
-# print(timeSec)
-k=0
-for sev in plan.keys():
-	j,cell,fix=0,[],[]
-	for i in timeSec:
-		cell.append(plan[sev][0]+plan[sev][1]*j)
-		fix.append(plan[sev][0]+plan[sev][2]*j)
-		if i%plan[sev][3]==0:j+=1
-	plan[sev].append(cell)
-	# plan[sev].append(fix)
-	print(plan[sev][4])
-	# print(plan[sev][5])
-	k+=1
-	import matplotlib.pyplot as plt
-	dashtype='-' if k<7 else '--'
-	plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][4],dashtype,label=sev+' cell')
-	# plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][5],label=sev+' fix')
-plt.legend(bbox_to_anchor=(1, 1), loc='best', borderaxespad=0,fontsize='small')
-plt.subplots_adjust(right=0.75)
-plt.xlabel('minuits')
-plt.ylabel('Yen')
-plt.show()
+import matplotlib.pyplot as plt
+mode={'cell':1,'fix':2}
+for l in mode.keys():    #携帯電話と固定電話にかける場合
+	k=0
+	for sev in plan.keys():    #planディクショナリ内の業者名称をforeach
+		j,cell,fix=0,[],[]
+		for i in timeSec:    #秒数だけループ
+			cell.append(plan[sev][0]+plan[sev][mode[l]]*j)    #料金をリストに追加
+			if i%plan[sev][3]==0:j+=1    #料金計算。30秒加算か1分加算がある(リストの項目3で決められている)
+		plan[sev].append(cell)    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
+		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][4],'-' if k<7 else '--',label=sev)
+		k+=1    #グラフカウンタ
+	plt.title(l)
+	plt.legend(bbox_to_anchor=(1, 0.5), loc='best', borderaxespad=0,fontsize='small')
+	plt.subplots_adjust(right=0.75)
+	plt.xlabel('minuits')
+	plt.ylabel('Yen')
+	plt.show()
 
 
