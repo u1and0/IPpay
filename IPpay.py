@@ -1,5 +1,10 @@
 '''
-## IPpay ver1.2
+## IPpay ver1.2.1
+
+__UPDATE1.2.1__
+plan={'050plus':[300,{'cell':[8,180],'fix':[16,60]}],
+みたいにしてみたけどどう？
+まだ途中
 
 __UPDATE1.2__
 '050Call'は月間通話料が315円を下回った場合は、315円を請求
@@ -32,11 +37,11 @@ FUCK!通話料が海外用の金額と間違えてたぜ
 
 
 
-timeSec=[i for i in range(7201)]
-plan={'050plus':[300,9,29,60],
+timeSec=[i for i in range(14401)]
+plan={'050plus':[300,{'cell':[8,180],'fix':[16,60]}],
 		'fusionIP':[0,8,8,30],
-		'LaLa Call':[100,6,28,60],
-		'G-Call050':[280,5,10,60],
+		'LaLa Call':[100,8,18,60],
+		'G-Call050':[280,8,16,60],
 		'050Call':[0,2,2,60],
 		'050free':[0,3.99,4.33,60],
 		'ServersMan 050':[300,7.5,40,180],
@@ -44,6 +49,7 @@ plan={'050plus':[300,9,29,60],
 		'FleaLine Light':[400,8,30,60],
 		'BlueSIPフォン':[600,21,21,60]
 		}
+mode=['cell','fix']
 '''
 planのリストの中身
 0. 月額基本料金
@@ -56,8 +62,7 @@ planのリストの中身
 
 
 import matplotlib.pyplot as plt
-mode={'cell':1,'fix':2}
-for l in mode.keys():    #携帯電話と固定電話にかける場合
+for l in mode:    #携帯電話と固定電話にかける場合
 	k=0
 	for sev in plan.keys():    #planディクショナリ内の業者名称をforeach
 		j,pay=0,[]
