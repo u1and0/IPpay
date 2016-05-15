@@ -1,9 +1,13 @@
 '''
 ## IPpay ver1.3
+__UPDATE1.4__
+auの通話料追加
+
 
 __UPDATE1.3__
 `plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},`として基本料金と固定電話、携帯電話の通話料をネスとされたディクショナリにした
 `base:基本料金,fix:[通話料,料金加算時間],cell:[通話料,料金加算時間],payList:[グラフに表示するリスト]`
+
 __UPDATE1.2.1__
 `plan={'050plus':[300,{'fix':[8,180],'cell':[16,60]}],`みたいにしてみたけどどう？
 まだ途中
@@ -31,8 +35,6 @@ planに料金表
 
 
 __TODO__
-FUCK!通話料が海外用の金額と間違えてたぜ
-しかも携帯と固定で料金加算時間が異なる！
 '''
 
 
@@ -49,7 +51,8 @@ plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
 		'ServersMan 050':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
 		'BIGLOBEフォン・モバイル':{'base':300,'fix':[8,180],'cell':[15.9,60],'payList':[]},
 		'FleaLine Light':{'base':400,'fix':[8,180],'cell':[16,60],'payList':[]},
-		'BlueSIPフォン':{'base':600,'fix':[20,60],'cell':[20,60],'payList':[]}
+		'BlueSIPフォン':{'base':600,'fix':[20,60],'cell':[20,60],'payList':[]},
+		'au':{'base':934,'fix':[20,30],'cell':[20,30],'payList':[]}
 		}
 mode=['fix','cell']
 '''
