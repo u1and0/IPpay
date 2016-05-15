@@ -1,9 +1,12 @@
-## IPpay ver2.1
+## IPpay ver2.2
+
+__UPDATE2.2__
+softbankとdocomoの料金も追加
+docomoは複雑すぎてわけわかんねぇからクソ
 
 __UPDATE2.1__
 グラフを並べて表示
 `plt.subplot(pll)`
-
 
 __UPDATE2.0__
 グラフを並べて表示
@@ -43,4 +46,4 @@ http://s-dentoku.mobile-runner.com/hikaku
 planに料金表
 
 __TODO__
-none
+None

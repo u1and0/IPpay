@@ -1,10 +1,13 @@
 '''
-## IPpay ver2.1
+## IPpay ver2.2
+
+__UPDATE2.2__
+softbankとdocomoの料金も追加
+docomoは複雑すぎてわけわかんねぇからクソ
 
 __UPDATE2.1__
 グラフを並べて表示
 `plt.subplot(pll)`
-
 
 __UPDATE2.0__
 グラフを並べて表示
@@ -44,7 +47,6 @@ http://s-dentoku.mobile-runner.com/hikaku
 planに料金表
 
 __TODO__
-none
 '''
 
 
@@ -62,7 +64,8 @@ plan={'050plus':{'base':300,'fix':[8,180,[]],'cell':[16,60,[]]},
 		'BIGLOBEフォン・モバイル':{'base':300,'fix':[8,180,[]],'cell':[15.9,60,[]]},
 		'FleaLine Light':{'base':400,'fix':[8,180,[]],'cell':[16,60,[]]},
 		'BlueSIPフォン':{'base':600,'fix':[20,60,[]],'cell':[20,60,[]]},
-		'au':{'base':934,'fix':[20,30,[]],'cell':[20,30,[]]}
+		'au':{'base':934,'fix':[20,30,[]],'cell':[20,30,[]]},
+		'softbank':{'base':934,'fix':[20,30,[]],'cell':[20,30,[]]},
 		}
 mode=['fix','cell']
 '''
@@ -95,8 +98,8 @@ for l in mode:    #携帯電話と固定電話にかける場合
 		plt.ylabel('Yen')
 		plt.title(l)
 		plt.grid(True)
+		plt.legend(bbox_to_anchor=(1, 1), loc='best',fontsize='small')
 
-plt.legend(bbox_to_anchor=(1, 1.03), loc='best',fontsize='small')
 plt.subplots_adjust(right=0.6)
 plt.xlabel('minuits')
 plt.show()
