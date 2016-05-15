@@ -1,4 +1,11 @@
-## IPpay ver2.2
+## IPpay ver2.2.1
+
+__UPDATE2.2.1__
+グラフのpng画像追加
+やりたいことはひとまず終了
+
+![月々通話20分](https://raw.github.com/wiki/u1and0/IPpay.git/images/20min.png)
+![月々通話120分](https://raw.github.com/wiki/u1and0/IPpay.git/images/120min.png)
 
 __UPDATE2.2__
 softbankとdocomoの料金も追加
