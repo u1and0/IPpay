@@ -1,9 +1,13 @@
 '''
-## IPpay ver1.3
+## IPpay ver2.1
+
+__UPDATE2.1__
+グラフを並べて表示
+`plt.subplot(pll)`
+
 __UPDATE2.0__
 グラフを並べて表示
 準備段階として`plan={'050plus':{'base':300,'fix':[8,180,[]],'cell':[16,60,[]]},`ディクショナリ in ディクショナリのリストの第2要素をプロットするように変更
-
 
 __UPDATE1.4__
 auの通話料追加
@@ -72,7 +76,7 @@ planのリストの中身
 
 import matplotlib.pyplot as plt
 for l in mode:    #携帯電話と固定電話にかける場合
-	k=0
+	k=0    #グラフカウンタ
 	for sev in plan.keys():    #planディクショナリ内の業者名称をforeach
 		j,pay=0,[]
 		for i in timeSec:    #秒数だけループ
@@ -83,13 +87,17 @@ for l in mode:    #携帯電話と固定電話にかける場合
 				if pay[modify]<315:
 					pay[modify]=315
 		plan[sev][l][2]=pay    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
+		pll=''.join(['2','1',str(mode.index(l)+1)])
+		plt.subplot(pll)
 		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][l][2],'-' if k<7 else '--',label=sev)
 		k+=1    #グラフカウンタ
-	plt.title(l)
-	plt.legend(bbox_to_anchor=(1, 0.5), loc='best', borderaxespad=0,fontsize='small')
-	plt.subplots_adjust(right=0.75)
-	plt.xlabel('minuits')
-	plt.ylabel('Yen')
-	plt.show()
+		plt.ylabel('Yen')
+		plt.title(l)
+		plt.grid(True)
+
+plt.legend(bbox_to_anchor=(1, 1.03), loc='best',fontsize='small')
+plt.subplots_adjust(right=0.6)
+plt.xlabel('minuits')
+plt.show()
 
 
