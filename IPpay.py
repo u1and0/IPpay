@@ -1,9 +1,11 @@
 '''
-## IPpay ver1.2.1
+## IPpay ver1.3
 
+__UPDATE1.3__
+`plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},`として基本料金と固定電話、携帯電話の通話料をネスとされたディクショナリにした
+`base:基本料金,fix:[通話料,料金加算時間],cell:[通話料,料金加算時間],payList:[グラフに表示するリスト]`
 __UPDATE1.2.1__
-plan={'050plus':[300,{'cell':[8,180],'fix':[16,60]}],
-みたいにしてみたけどどう？
+`plan={'050plus':[300,{'fix':[8,180],'cell':[16,60]}],`みたいにしてみたけどどう？
 まだ途中
 
 __UPDATE1.2__
@@ -37,19 +39,19 @@ FUCK!通話料が海外用の金額と間違えてたぜ
 
 
 
-timeSec=[i for i in range(14401)]
-plan={'050plus':[300,{'cell':[8,180],'fix':[16,60]}],
-		'fusionIP':[0,8,8,30],
-		'LaLa Call':[100,8,18,60],
-		'G-Call050':[280,8,16,60],
-		'050Call':[0,2,2,60],
-		'050free':[0,3.99,4.33,60],
-		'ServersMan 050':[300,7.5,40,180],
-		'BIGLOBEフォン・モバイル':[300,8,30,60],
-		'FleaLine Light':[400,8,30,60],
-		'BlueSIPフォン':[600,21,21,60]
+timeSec=[i for i in range(0,7201,30)]
+plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
+		'fusionIP':{'base':0,'fix':[8,30],'cell':[8,30],'payList':[]},
+		'LaLa Call':{'base':100,'fix':[8,180],'cell':[18,60],'payList':[]},
+		'G-Call050':{'base':280,'fix':[8,180],'cell':[16,60],'payList':[]},
+		'050Call':{'base':0,'fix':[7.62,180],'cell':[14.29,60],'payList':[]},
+		'050free':{'base':0,'fix':[8,180],'cell':[5.5,30],'payList':[]},
+		'ServersMan 050':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
+		'BIGLOBEフォン・モバイル':{'base':300,'fix':[8,180],'cell':[15.9,60],'payList':[]},
+		'FleaLine Light':{'base':400,'fix':[8,180],'cell':[16,60],'payList':[]},
+		'BlueSIPフォン':{'base':600,'fix':[20,60],'cell':[20,60],'payList':[]}
 		}
-mode=['cell','fix']
+mode=['fix','cell']
 '''
 planのリストの中身
 0. 月額基本料金
@@ -60,21 +62,20 @@ planのリストの中身
 
 
 
-
 import matplotlib.pyplot as plt
 for l in mode:    #携帯電話と固定電話にかける場合
 	k=0
 	for sev in plan.keys():    #planディクショナリ内の業者名称をforeach
 		j,pay=0,[]
 		for i in timeSec:    #秒数だけループ
-			pay.append(plan[sev][0]+plan[sev][mode[l]]*j)    #料金をリストに追加
-			if i%plan[sev][3]==0:j+=1    #料金計算。30秒加算か1分加算がある(リストの項目3で決められている)
+			pay.append(plan[sev]['base']+plan[sev][l][0]*j)    #料金をリストに追加
+			if i%plan[sev][l][1]==0:j+=1    #料金計算。30秒加算か1分加算がある(リストの項目3で決められている)
 		if sev=='050Call':
 			for modify in range(len(pay)):
 				if pay[modify]<315:
 					pay[modify]=315
-		plan[sev].append(pay)    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
-		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][4],'-' if k<7 else '--',label=sev)
+		plan[sev]['payList']=pay    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
+		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev]['payList'],'-' if k<7 else '--',label=sev)
 		k+=1    #グラフカウンタ
 	plt.title(l)
 	plt.legend(bbox_to_anchor=(1, 0.5), loc='best', borderaxespad=0,fontsize='small')
