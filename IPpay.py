@@ -1,8 +1,13 @@
 '''
 ## IPpay ver1.3
+__UPDATE2.0__
+グラフを並べて表示
+準備段階として`plan={'050plus':{'base':300,'fix':[8,180,[]],'cell':[16,60,[]]},`ディクショナリ in ディクショナリのリストの第2要素をプロットするように変更
+
+
 __UPDATE1.4__
 auの通話料追加
-
+毎月10分くらいは通話してるのかな
 
 __UPDATE1.3__
 `plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},`として基本料金と固定電話、携帯電話の通話料をネスとされたディクショナリにした
@@ -33,8 +38,8 @@ http://s-dentoku.mobile-runner.com/hikaku
 の料金をグラフ化してくれる
 planに料金表
 
-
 __TODO__
+none
 '''
 
 
@@ -42,17 +47,17 @@ __TODO__
 
 
 timeSec=[i for i in range(0,7201,30)]
-plan={'050plus':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
-		'fusionIP':{'base':0,'fix':[8,30],'cell':[8,30],'payList':[]},
-		'LaLa Call':{'base':100,'fix':[8,180],'cell':[18,60],'payList':[]},
-		'G-Call050':{'base':280,'fix':[8,180],'cell':[16,60],'payList':[]},
-		'050Call':{'base':0,'fix':[7.62,180],'cell':[14.29,60],'payList':[]},
-		'050free':{'base':0,'fix':[8,180],'cell':[5.5,30],'payList':[]},
-		'ServersMan 050':{'base':300,'fix':[8,180],'cell':[16,60],'payList':[]},
-		'BIGLOBEフォン・モバイル':{'base':300,'fix':[8,180],'cell':[15.9,60],'payList':[]},
-		'FleaLine Light':{'base':400,'fix':[8,180],'cell':[16,60],'payList':[]},
-		'BlueSIPフォン':{'base':600,'fix':[20,60],'cell':[20,60],'payList':[]},
-		'au':{'base':934,'fix':[20,30],'cell':[20,30],'payList':[]}
+plan={'050plus':{'base':300,'fix':[8,180,[]],'cell':[16,60,[]]},
+		'fusionIP':{'base':0,'fix':[8,30,[]],'cell':[8,30,[]]},
+		'LaLa Call':{'base':100,'fix':[8,180,[]],'cell':[18,60,[]]},
+		'G-Call050':{'base':280,'fix':[8,180,[]],'cell':[16,60,[]]},
+		'050Call':{'base':0,'fix':[7.62,180,[]],'cell':[14.29,60,[]]},
+		'050free':{'base':0,'fix':[8,180,[]],'cell':[5.5,30,[]]},
+		'ServersMan 050':{'base':300,'fix':[8,180,[]],'cell':[16,60,[]]},
+		'BIGLOBEフォン・モバイル':{'base':300,'fix':[8,180,[]],'cell':[15.9,60,[]]},
+		'FleaLine Light':{'base':400,'fix':[8,180,[]],'cell':[16,60,[]]},
+		'BlueSIPフォン':{'base':600,'fix':[20,60,[]],'cell':[20,60,[]]},
+		'au':{'base':934,'fix':[20,30,[]],'cell':[20,30,[]]}
 		}
 mode=['fix','cell']
 '''
@@ -77,8 +82,8 @@ for l in mode:    #携帯電話と固定電話にかける場合
 			for modify in range(len(pay)):
 				if pay[modify]<315:
 					pay[modify]=315
-		plan[sev]['payList']=pay    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
-		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev]['payList'],'-' if k<7 else '--',label=sev)
+		plan[sev][l][2]=pay    #料金をplanディクショナリの値(リスト)に追加してキーから呼び出せるようにする
+		plt.plot(list(map(lambda re: re/60,timeSec)),plan[sev][l][2],'-' if k<7 else '--',label=sev)
 		k+=1    #グラフカウンタ
 	plt.title(l)
 	plt.legend(bbox_to_anchor=(1, 0.5), loc='best', borderaxespad=0,fontsize='small')
